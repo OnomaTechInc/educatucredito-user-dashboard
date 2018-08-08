@@ -7,60 +7,81 @@
             <v-flex xs12 sm12 md12 lg12 text-center>
                 <h1 class="heading">WELCOME!</h1>
             </v-flex>
-            <v-flex xs12 sm12 md12 lg12 text-center class="btnOptions">
-              <ul>
-                <li><a href="#">profile</a></li>
-                <li><a href="#">register</a></li>
-                <li><a href="#">option</a></li>
-              </ul>
-            </v-flex>
-            <v-card-title>
-              <v-avatar
-                class="float_atop"
-                slot="activator"
-                color="red"
-                size="108"
-                style="background: #fff"
-                light
+            <v-tabs 
+              fixed-tabs 
+              v-model="model"
+            >
+              <v-tab href="#tab-profile">Profile</v-tab>
+              <v-tab href="#tab-register">Register</v-tab>
+              <v-tab href="#tab-option">Option</v-tab>
+            </v-tabs>
+            <v-tabs-items
+              v-model="model"
+            >
+              <v-tab-item
+                id="tab-profile"
               >
-                <img
-                  title="click here to change photo"
-                  v-if="editedItem.avatar"
-                  :src="editedItem.avatar"
-                  alt=""
-                >
-              <span title="click here to upload photo" class="black--text" v-else><v-icon size="108">account_circle</v-icon></span>
-              </v-avatar>
-              <v-flex class="profileInfo">
-                <h3 v-if="editedItem.name" v-html="editedItem.name"></h3>
-                <h3 v-else>Name</h3>
-                <ul>
-                  <li  v-if="editedItem.email" v-html="editedItem.email"></li>
-                  <li  v-else>Email@email.com</li>
-                  <li>019-932-132</li>
-                  <li>2490 Lazy Tampa Florida USA</li>
-                </ul>
-              </v-flex>  
-            </v-card-title>
-            <v-divider></v-divider>
-            <v-card-title>
-              <v-flex xs12 sm12 md6 lg4 class="videoHolder">
                 <v-card-title>
-                <h3>Video</h3>
+                  <v-avatar
+                    class="float_atop"
+                    slot="activator"
+                    color="red"
+                    size="108"
+                    style="background: #fff"
+                    light
+                  >
+                    <img
+                      title="click here to change photo"
+                      v-if="editedItem.avatar"
+                      :src="editedItem.avatar"
+                      alt=""
+                    >
+                  <span title="click here to upload photo" class="black--text" v-else><v-icon size="108">account_circle</v-icon></span>
+                  </v-avatar>
+                  <v-flex class="profileInfo">
+                    <h3 v-if="editedItem.name" v-html="editedItem.name"></h3>
+                    <h3 v-else>Name</h3>
+                    <ul>
+                      <li  v-if="editedItem.email" v-html="editedItem.email"></li>
+                      <li  v-else>Email@email.com</li>
+                      <li>019-932-132</li>
+                      <li>2490 Lazy Tampa Florida USA</li>
+                    </ul>
+                  </v-flex>  
                 </v-card-title>
-                <video-player
-                  class="video-player-box"
-                  ref="videoPlayer"
-                  :options="playerOptions"
-                  :playsinline="true"
-                >
-                </video-player>
-              </v-flex >
-              <v-flex class="desc" xs12 sm12 md6 lg8>
-                <h3 classs="text-underline">Lorem Ipsum</h3>
-                <p>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam, dolorum nihil tenetur modi fugit soluta sunt facilis non doloribus iure obcaecati itaque aliquid magnam cupiditate enim fuga cum pariatur quam!"</p>
-              </v-flex>
-            </v-card-title>
+                <v-divider></v-divider>
+                <v-card-title>
+                  <v-flex xs12 sm12 md6 lg4 class="videoHolder">
+                    <v-card-title>
+                    <h3>Video</h3>
+                    </v-card-title>
+                    <video-player
+                      class="video-player-box"
+                      ref="videoPlayer"
+                      :options="playerOptions"
+                      :playsinline="true"
+                    >
+                    </video-player>
+                  </v-flex >
+                  <v-flex class="desc" xs12 sm12 md6 lg8>
+                    <h3 classs="text-underline">Lorem Ipsum</h3>
+                    <p>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam, dolorum nihil tenetur modi fugit soluta sunt facilis non doloribus iure obcaecati itaque aliquid magnam cupiditate enim fuga cum pariatur quam!"</p>
+                  </v-flex>
+                </v-card-title>
+              </v-tab-item>
+
+              <v-tab-item
+                id="tab-register"
+              >
+                <iframe style="width: 100%; border: 0; min-height: 800px" src="https://www.financialeducationservices.com/AgentEnroll.aspx?rid=kfernandez"></iframe>
+              </v-tab-item>
+              <v-tab-item
+                id="tab-option"
+                style="min-height: 400px;"
+              >
+                <h2>Coming soon</h2>
+              </v-tab-item>  
+            </v-tabs-items>
           </v-card>
           <v-divider></v-divider>
           <v-card flat  class="news">
@@ -314,6 +335,7 @@ a {
   export default {
     data () {
       return {
+        model: 'tab-profile',
         items: [],
         editedItem: {
           name: '',

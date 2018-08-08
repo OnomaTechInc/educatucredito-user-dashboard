@@ -30,7 +30,7 @@
                 <a class="nav-link js-scroll-trigger" href="/why-choose-us">{{ link.whyus }}</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="/user/#/login">{{ link.login }}</a>
+                  <a class="nav-link js-scroll-trigger" href="/login">{{ link.login }}</a>
               </li>
             </ul>
           </div>
@@ -297,6 +297,11 @@
             icon: 'dashboard',
             title: 'Dashboard',
             link: '/dashboard'
+          },
+          {
+            icon: 'account_balance',
+            title: 'My Account',
+            link: '/myaccount'
           },
           {
             icon: 'live_tv',

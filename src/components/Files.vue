@@ -58,8 +58,8 @@
                               <div :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}" role="progressbar" :style="{width: file.progress + '%'}">{{file.progress}}%</div>
                             </div>
                           </td>
-                          <td>{{file.size | formatSize}}</td>
-                          <td>{{file.speed | formatSize}}</td>
+                          <td>{{file.size}}</td>
+                          <td>{{file.speed}}</td>
 
                           <td v-if="file.error">{{file.error}}</td>
                           <td v-else-if="file.success">success</td>
@@ -179,7 +179,7 @@
                   <div class="form-group">
                     <label for="autoCompress">Automatically compress:</label>
                     <input type="number" min="0" id="autoCompress" class="form-control" v-model.number="autoCompress">
-                    <small class="form-text text-muted" v-if="autoCompress > 0">More than {{autoCompress | formatSize}} files are automatically compressed</small>
+                    <small class="form-text text-muted" v-if="autoCompress > 0">More than {{autoCompress}} files are automatically compressed</small>
                     <small class="form-text text-muted" v-else>Set up automatic compression</small>
                   </div>
 

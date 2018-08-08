@@ -7,6 +7,7 @@ import Videos from '@/components/Videos'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import PageNotFound from '@/components/404'
+import MyAccount2 from '@/components/MyAccount'
 
 Vue.use(Router)
 
@@ -54,6 +55,18 @@ export default new Router({
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/',
+    name: 'Home',
+    component: Dashboard,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/myaccount',
+    name: 'MyAccount',
+    component: MyAccount2,
     beforeEnter: requireAuth
   },
   {
