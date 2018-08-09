@@ -11,7 +11,7 @@
               fixed-tabs 
               v-model="model"
             >
-              <v-tab href="#tab-profile">Profile</v-tab>
+              <v-tab href="#tab-agent">Agent</v-tab>
               <v-tab href="#tab-register">Register</v-tab>
               <v-tab href="#tab-option">Option</v-tab>
             </v-tabs>
@@ -19,7 +19,7 @@
               v-model="model"
             >
               <v-tab-item
-                id="tab-profile"
+                id="tab-agent"
               >
                 <v-card-title>
                   <v-avatar
