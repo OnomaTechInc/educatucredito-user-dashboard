@@ -275,10 +275,28 @@
                       </v-card-actions>
                     </v-card>
                   </v-flex>
-
                 </v-layout>
               </v-container>
             </v-card-text>
+          </v-card>
+          <v-card flat class="site">
+            <v-container fluid>
+              <v-layout row wrap>
+              <v-flex xs12 sm12 md4 text-center>
+                <img
+                  title="click here to change photo"
+                  src="../../static/img/sitelogo.png"
+                  alt=""
+                  width="283"
+                  height="225"
+                >   
+              </v-flex>
+              <v-flex xs12 sm12 md8 class="infos">
+                <h3>Educa tu Credito</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsam ducimus tempore ad aspernatur ratione, ipsum quam qui velit aperiam doloribus corporis possimus quo harum assumenda, maxime itaque dolorum cum.</p>
+              </v-flex>
+              </v-layout>
+            </v-container>
           </v-card>
         </v-container>
       </v-layout>
