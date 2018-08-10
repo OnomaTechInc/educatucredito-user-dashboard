@@ -353,6 +353,8 @@ a {
   export default {
     data () {
       return {
+        translationText:[],
+        dialog:true,
         model: 'tab-profile',
         items: [],
         editedItem: {
@@ -384,12 +386,31 @@ a {
         }
       }
     },
-    computed: {
-    },
-    watch: {
-    },
     created () {
       this.initialize()
+      this.translation(this.$parent.$parent.$parent.language)
+      var d = this
+      window._wq = window._wq || []
+      // target our video by the first 3 characters of the hashed ID
+      window._wq.push({
+        id: 'h4z90hkwgl',
+        onReady: function (video) {
+          // on play, seek the video to 10 seconds, then unbind so it
+          // only happens once.
+          video.bind('end', function (t) {
+            console.log('the video ended')
+            d.dialog = true
+            video.popover.hide()
+          })
+        }
+      })
+    },
+    watch: {
+      '$parent.$parent.$parent.language' (v) {
+        this.translation(this.$parent.$parent.$parent.language)
+      }
+    },
+    computed: {
     },
     methods: {
       initialize () {
@@ -427,6 +448,15 @@ a {
           }
           d.loading = false
         })
+      },
+      translation (val) {
+        if (val === 'en') {
+          this.translationText = {
+          }
+        } else if (val === 'es') {
+          this.translationText = {
+          }
+        }
       }
     },
     components: {
