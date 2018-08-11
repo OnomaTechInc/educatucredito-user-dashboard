@@ -69,7 +69,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="saveProfile">Save</v-btn>
             </v-card-actions>
           </v-card>
         </v-container>
@@ -241,14 +241,16 @@ a {
         }
       },
 
-      save () {
+      saveProfile () {
         var data = new FormData()
         var d = this
+        // console.log('adasdas')
         // var O = Object
         data.append('file', document.getElementById('uploadFile').files[0])
-        axios.put(`${window.apiLink}users/`, {
+        axios.post(`${window.apiLink}users/${d.editedItem.id}`, {
           email: d.editedItem.email,
           name: d.editedItem.name,
+          role: d.editedItem.role,
           company: d.editedItem.company,
           position: d.editedItem.position
         }).then(function (res) {

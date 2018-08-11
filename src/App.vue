@@ -30,7 +30,7 @@
                 <a class="nav-link js-scroll-trigger" href="/why-choose-us">{{ link.whyus }}</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="/login">{{ link.login }}</a>
+                  <a class="nav-link js-scroll-trigger" href="/user/#/login">{{ link.login }}</a>
               </li>
             </ul>
           </div>
@@ -109,6 +109,19 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title v-text="title"></v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-menu offset-y>
+          <v-btn icon slot="activator">
+            <v-badge color="orange" overlap>
+              <span class="white--text" slot="badge">3</span>
+                <v-icon light>notifications</v-icon>
+            </v-badge>
+          </v-btn>
+          <v-list>
+            <v-list-tile v-for="item in notifItems" :key="item.title">
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
         <v-btn flat @click="logout">
             <v-icon light small>exit_to_app</v-icon>
             Log out
@@ -200,6 +213,13 @@
   export default {
     data () {
       return {
+        notifItems: [{
+          title: 'Welcome!'
+        }, {
+          title: 'Hey its meee!'
+        }, {
+          title: 'the quick brown fox!'
+        }],
         sheet: true,
         dialog: false,
         direction: 'top',
@@ -308,11 +328,11 @@
             title: 'Videos',
             link: '/videos'
           },
-          {
-            icon: 'attach_file',
-            title: 'Files',
-            link: '/files'
-          },
+          // {
+          //   icon: 'attach_file',
+          //   title: 'Files',
+          //   link: '/files'
+          // },
           {
             icon: 'account_circle',
             title: 'Profile',

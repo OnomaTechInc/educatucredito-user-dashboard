@@ -19,12 +19,8 @@
                   <template v-for="item in items">
                     <v-list-tile
                       :key="item.title"
-                      avatar
+                      @click="loadVideo(item)"
                     >
-                      <v-list-tile-avatar>
-                        <img :src="item.avatar">
-                      </v-list-tile-avatar>
-
                       <v-list-tile-content>
                         <v-list-tile-title v-html="item.title"></v-list-tile-title>
                         <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
@@ -97,19 +93,46 @@ a {
       return {
         items: [
           {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
             title: 'Brunch this weekend?',
-            subtitle: "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+            subtitle: "<span class='text--primary'>Ali Connors</span>",
+            player: {
+              muted: false,
+              fluid: true,
+              language: 'en',
+              playbackRates: [0.7, 1.0, 1.5, 2.0],
+              sources: [{
+                type: 'video/mp4',
+                src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm'
+              }]
+            }
           },
           {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
             title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-            subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
+            subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span>",
+            player: {
+              muted: false,
+              fluid: true,
+              language: 'en',
+              playbackRates: [0.7, 1.0, 1.5, 2.0],
+              sources: [{
+                type: 'video/mp4',
+                src: 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4'
+              }]
+            }
           },
           {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
             title: 'Oui oui',
-            subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
+            subtitle: "<span class='text--primary'>Sandra Adams</span>",
+            player: {
+              muted: false,
+              fluid: true,
+              language: 'en',
+              playbackRates: [0.7, 1.0, 1.5, 2.0],
+              sources: [{
+                type: 'video/mp4',
+                src: 'http://7xkwa7.media1.z0.glb.clouddn.com/sample_video_L'
+              }]
+            }
           }
         ],
         playerOptions: {
@@ -130,6 +153,10 @@ a {
     watch: {
     },
     methods: {
+      loadVideo (val) {
+        // console.log(val)
+        this.playerOptions = val.player
+      }
     },
     components: {
       videoPlayer

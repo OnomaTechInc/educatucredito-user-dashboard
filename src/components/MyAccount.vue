@@ -40,7 +40,7 @@
                         </v-flex>
                         <v-flex xs12 sm12 md12>
                           <v-text-field 
-                            v-model="editedItem.dutedate" 
+                            v-model="editedItem.duedate" 
                             label="Due Date"
                           ></v-text-field>
                         </v-flex>
@@ -61,6 +61,15 @@
                             v-model="editedItem.balance" 
                             label="Balance"
                           ></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm12 md12>
+                          <v-text-field 
+                            v-model="editedItem.file" 
+                            label="Balance"
+                            style="display: none;"
+                          ></v-text-field>
+                          <v-btn block @click="uploadPhoto">Attach Scan Copy</v-btn>
+                          <upload-btn :fileChangedCallback="loadPhoto" style="display:none"></upload-btn>
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -89,9 +98,11 @@
             >
               <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
               <template slot="items" slot-scope="props">
-                <td class="text-xs-left">{{ props.item.email }}</td>
-                <td class="text-xs-left">{{ props.item.studio }}</td>
-                <td class="text-xs-left">{{ props.item.role }}</td>
+                <td class="text-xs-left">{{ props.item.name }}</td>
+                <td class="text-xs-left">{{ props.item.duedate }}</td>
+                <td class="text-xs-left">{{ props.item.amount }}</td>
+                <td class="text-xs-left">{{ props.item.reported }}</td>
+                <td class="text-xs-left">{{ props.item.balance }}</td>
                 <td class="justify-center layout px-0">
                   <v-btn icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="teal">edit</v-icon>
@@ -148,13 +159,15 @@ a {
 }
 </style>
 <script>
-  // import axios from 'axios'
-  // import {uuid} from 'vue-uuid'
+  import axios from 'axios'
+  import {uuid} from 'vue-uuid'
+  import UploadButton from 'vuetify-upload-button'
   export default {
     data () {
       return {
+        session: [],
         dialog: false,
-        loading: true,
+        loading: false,
         search: '',
         items: [],
         editedIndex: -1,
@@ -171,10 +184,54 @@ a {
           { text: 'reported', value: 'reported' },
           { text: 'balance', value: 'balance' },
           { text: 'Actions', value: 'name', sortable: false }
-        ]
+        ],
+        loadPhoto: function (val) {
+          var reader = new FileReader()
+          var d = this
+          reader.onload = function (event) {
+            d.$parent.$parent.editedItem.file = event.target.result
+          }
+          reader.readAsDataURL(val)
+          d.$parent.$parent.photoIsLoaded = true
+        }
       }
     },
     created () {
+      var d = this
+      this.session = JSON.parse(window.localStorage.getItem('session'))
+      axios.defaults.headers.common['Authorization'] = `bearer ${this.session.api_key}`
+      axios.get(window.apiLink + 'accounts').then(function (response) {
+        // localStorage.setItem('session', JSON.stringify(response.data))
+        // d.$emit('setRoleName', response.data)
+        var items = []
+        for (var x = 0; x < response.data.result.length; x++) {
+          items.push({
+            id: response.data.result[x].id,
+            name: response.data.result[x].name,
+            user_id: response.data.result[x].user_id,
+            duedate: response.data.result[x].due_date,
+            amount: response.data.result[x].amount,
+            reported: response.data.result[x].reported,
+            balance: response.data.result[x].balance,
+            file: response.data.result[x].file
+          })
+        }
+        d.loading = false
+        d.items = items
+      }).catch(function (error) {
+        console.log(error)
+        if (error.response !== undefined && error.response.status === 422) {
+          d.error = true
+          d.errorMessage = error.response.data.username
+        } else {
+          d.$emit('receiveAlertMessage', {
+            body: error.response.statusText,
+            type: 'error',
+            id: uuid.v4()
+          })
+        }
+        d.loading = false
+      })
     },
     computed: {
       formTitle () {
@@ -184,6 +241,10 @@ a {
     watch: {
     },
     methods: {
+      uploadPhoto () {
+        document.getElementById('uploadFile').click()
+      },
+
       editItem (item) {
         this.editedIndex = this.items.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -209,9 +270,75 @@ a {
       },
 
       save () {
+        var data = new FormData()
+        var d = this
+        data.append('file', document.getElementById('uploadFile').files[0])
+        var O = Object
+        if (this.editedIndex > -1) {
+          axios.post(`${window.apiLink}accounts/${d.editedItem.id}`, {
+            due_date: d.editedItem.duedate,
+            reported: d.editedItem.reported,
+            amount: d.editedItem.amount,
+            balance: d.editedItem.balance,
+            file: d.editedItem.file
+          }).then(function (res) {
+            O.assign(d.items[d.editedIndex], d.editedItem)
+            d.$emit('receiveAlertMessage', {
+              body: 'User has been successfully save.',
+              type: 'success',
+              id: uuid.v4()
+            })
+            d.close()
+            if (d.photoIsLoaded === true) {
+              axios.post(
+                `${window.apiLink}accounts/upload/${d.editedItem.id}`,
+                data
+              ).then(function (res2) {
+              }).catch(function (error2) {
+                console.log('error: ', error2)
+              })
+              d.photoIsLoaded = false
+            }
+          }).catch(function (error) {
+            console.log('error: ', error)
+          })
+        } else {
+          axios.post(`${window.apiLink}accounts/`, {
+            user_id: d.session.id,
+            due_date: d.editedItem.duedate,
+            reported: d.editedItem.reported,
+            amount: d.editedItem.amount,
+            balance: d.editedItem.balance,
+            file: d.editedItem.file
+          }).then(function (res) {
+            // console.log('editedItem: ', d.editedItem)
+            d.editedItem.id = res.data.last_insert_id
+            d.items.push(d.editedItem)
+            // console.log('items: ', d.items)
+            d.$emit('receiveAlertMessage', {
+              body: 'User has been successfully save.',
+              type: 'success',
+              id: uuid.v4()
+            })
+            d.close()
+            if (d.photoIsLoaded === true) {
+              axios.post(
+                `${window.apiLink}accounts/upload/${res.data.last_insert_id}`,
+                data
+              ).then(function (res2) {
+              }).catch(function (error2) {
+                console.log('error: ', error2)
+              })
+              d.photoIsLoaded = false
+            }
+          }).catch(function (error) {
+            console.log('error: ', error)
+          })
+        }
       }
     },
     components: {
+      'upload-btn': UploadButton
     }
   }
 </script>

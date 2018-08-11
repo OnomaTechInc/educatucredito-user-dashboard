@@ -353,8 +353,8 @@ a {
   export default {
     data () {
       return {
-        translationText:[],
-        dialog:true,
+        translationText: [],
+        dialog: true,
         model: 'tab-profile',
         items: [],
         editedItem: {
