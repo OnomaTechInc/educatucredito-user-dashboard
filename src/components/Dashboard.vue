@@ -25,27 +25,24 @@
                   <v-avatar
                     class="float_atop"
                     slot="activator"
-                    color="red"
+                    color="gray"
                     size="108"
                     style="background: #fff"
                     light
                   >
                     <img
-                      title="click here to change photo"
-                      v-if="editedItem.avatar"
-                      :src="editedItem.avatar"
+                      v-if="agentAvatar"
+                      :src="agentAvatar"
                       alt=""
                     >
-                  <span title="click here to upload photo" class="black--text" v-else><v-icon size="108">account_circle</v-icon></span>
+                  <span class="black--text" v-else><v-icon size="108">account_circle</v-icon></span>
                   </v-avatar>
                   <v-flex class="profileInfo">
-                    <h3 v-if="editedItem.name" v-html="editedItem.name"></h3>
-                    <h3 v-else>Name</h3>
+                    <h3>{{ agentName }}</h3>
                     <ul>
-                      <li  v-if="editedItem.email" v-html="editedItem.email"></li>
-                      <li  v-else>Email@email.com</li>
-                      <li>019-932-132</li>
-                      <li>2490 Lazy Tampa Florida USA</li>
+                      <li>{{ agentEmail }}</li>
+                      <li>{{ agentContact }}</li>
+                      <li>{{ agentAddress }}</li>
                     </ul>
                   </v-flex>  
                 </v-card-title>
@@ -94,8 +91,11 @@
                 grid-list-lg
               >
                 <v-layout row wrap>
-                  <v-flex xs12 sm12 md6 lg4 v-for="item in items">
-                    <v-card color="purple" class="white--text">
+                  <v-flex
+                    xs12 sm12 md6 lg4 
+                    v-for="item in newsItems"
+                  >
+                    <v-card color="gray lighten-5" class="">
                       <v-layout row>
                         <v-flex xs7>
                           <v-card-title primary-title>
@@ -111,12 +111,11 @@
                       </v-layout>
                       <v-divider light></v-divider>
                       <v-card-actions class="pa-3">
-                        <v-btn flat dark @click="readmore">Read more</v-btn>
+                        <v-btn flat dark class="primary" @click="fetchNews(item.id)">Read more</v-btn>
                         <v-spacer></v-spacer>
                       </v-card-actions>
                     </v-card>
                   </v-flex>
-
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -143,6 +142,16 @@
         </v-container>
       </v-layout>
     </v-slide-y-transition>
+    <v-dialog v-model="readPopup" max-width="500px">
+      <v-card flat>
+        <v-card-title>
+          <h3>{{ newsHeadline }}</h3>
+          <p><strong>{{ newsSubheader }}</strong></p>
+        </v-card-title>
+        <v-card-text v-html="newsContent">
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -195,9 +204,19 @@ a {
   export default {
     data () {
       return {
+        readPopup: false,
+        newsHeadline: '',
+        newsSubheader: '',
+        newsContent: '',
+        agentName: '',
+        agentEmail: '',
+        agentContact: '',
+        agentAddress: '',
+        agentAvatar: '',
         translationText: [],
         dialog: true,
         model: 'tab-profile',
+        newsItems: [],
         items: [],
         editedItem: {
           name: '',
@@ -262,37 +281,28 @@ a {
         this.session = JSON.parse(localStorage.getItem('session'))
         axios.defaults.headers.common['Authorization'] = `bearer ${this.session.api_key}`
         // fetch user data and agent
-        // axios.get(`${window.apiLink}myagents/${d.session.id}`).then(function (response) {
-        //   // localStorage.setItem('session', JSON.stringify(response.data))
-        //   // d.$emit('setRoleName', response.data)
-        //   var items = []
-        //   // for (var x = 0; x < response.data.result.length; x++) {
-        //   items = {
-        //     id: response.data.result[0].id,
-        //     name: response.data.result[0].name,
-        //     avatar: response.data.result[0].user_image,
-        //     email: response.data.result[0].email,
-        //     role: response.data.result[0].role,
-        //     position: response.data.result[0].position,
-        //     company: response.data.result[0].company
-        //   }
-        //   // }
-        //   d.loading = false
-        //   d.editedItem = items
-        // }).catch(function (error) {
-        //   console.log(error)
-        //   if (error.response !== undefined && error.response.status === 422) {
-        //     d.error = true
-        //     d.errorMessage = error.response.data.username
-        //   } else {
-        //     d.$emit('receiveAlertMessage', {
-        //       body: error.response.statusText,
-        //       type: 'error',
-        //       id: uuid.v4()
-        //     })
-        //   }
-        //   d.loading = false
-        // })
+        axios.get(`${window.apiLink}users/${d.session.id}`).then(function (response) {
+          // console.log(response)
+          d.agentName = response.data.result[0].agent.name
+          d.agentEmail = response.data.result[0].agent.email
+          d.agentContact = response.data.result[0].agent.contact_number
+          d.agentAddress = response.data.result[0].agent.location
+          d.agentAvatar = response.data.result[0].agent.user_image
+          d.loading = false
+        }).catch(function (error) {
+          console.log(error)
+          if (error.response !== undefined && error.response.status === 422) {
+            d.error = true
+            d.errorMessage = error.response.data.username
+          } else {
+            d.$emit('receiveAlertMessage', {
+              body: error.response.statusText,
+              type: 'error',
+              id: uuid.v4()
+            })
+          }
+          d.loading = false
+        })
         // fetch video
         axios.get(`${window.apiLink}videos/`).then(function (response) {
           d.vidTitle = response.data.result[0].title
@@ -311,6 +321,47 @@ a {
               id: uuid.v4()
             })
           }
+          d.loading = false
+        })
+        // fetch news
+        axios.get(`${window.apiLink}news/list`).then(function (response) {
+          var itm = []
+          for (var i = 0; i < response.data.result.length; i++) {
+            itm.push({
+              id: response.data.result[i].id,
+              headline: response.data.result[i].headline,
+              subheader: response.data.result[i].subheader,
+              excerpt: response.data.result[i].description,
+              content: response.data.result[i].content
+            })
+            d.newsItems = itm
+          }
+          d.loading = false
+        }).catch(function (error) {
+          console.log(error)
+          d.$emit('receiveAlertMessage', {
+            body: error.response.statusText,
+            type: 'error',
+            id: uuid.v4()
+          })
+          d.loading = false
+        })
+      },
+      fetchNews (val) {
+        var d = this
+        axios.get(`${window.apiLink}news/${val}`).then(function (response) {
+          d.newsHeadline = response.data.result[0].headline
+          d.newsSubheader = response.data.result[0].subheader
+          d.newsContent = response.data.result[0].content
+          d.loading = false
+          d.readPopup = true
+        }).catch(function (error) {
+          console.log(error)
+          d.$emit('receiveAlertMessage', {
+            body: error.response.statusText,
+            type: 'error',
+            id: uuid.v4()
+          })
           d.loading = false
         })
       },

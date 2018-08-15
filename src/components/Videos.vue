@@ -108,7 +108,8 @@ a {
     created () {
       var dis = this
       axios.get(`${window.apiLink}videos/list`).then(function (response) {
-        for (var x = 0; x < response.data.length; x++) {
+        // console.log(response)
+        for (var x = 0; x < response.data.result.length; x++) {
           dis.items.push({
             title: response.data.result[x].title,
             subtitle: response.data.result[x].description,
