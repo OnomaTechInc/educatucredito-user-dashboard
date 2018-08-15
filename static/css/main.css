@@ -850,6 +850,15 @@ section .container p {
 }
 /* Dashboard */
 
+
+/* profile */
+.v-input__control{
+  padding:0 15px !important;
+}
+
+/* profile */
+
+
 @media only screen and (max-width:1263px) {
   .contactdetails {
     display: none;

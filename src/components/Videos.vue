@@ -11,11 +11,10 @@
           <v-card flat>
             <v-card-title>
               <v-flex xs12 sm12 md4 lg4>
-                <v-list two-line>
+                <!-- <v-list two-line>
                   <v-subheader>
                     Playlist
                   </v-subheader>
-
                   <template v-for="item in items">
                     <v-list-tile
                       :key="item.title"
@@ -27,7 +26,7 @@
                       </v-list-tile-content>
                     </v-list-tile>
                   </template>
-                </v-list>
+                </v-list> -->
               </v-flex>
               <v-flex xs12 sm12 md8 lg8>
                 <video-player
@@ -80,6 +79,8 @@ li {
 a {
   color: #42b983;
 }
+
+
 </style>
 <script>
   import axios from 'axios'

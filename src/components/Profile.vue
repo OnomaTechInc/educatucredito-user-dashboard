@@ -144,6 +144,10 @@ a {
   transform: translateX(-50%);
   z-index: 999;
 }
+.v-input__control{
+  padding:0 15px;
+}
+
 </style>
 <script>
   import axios from 'axios'
