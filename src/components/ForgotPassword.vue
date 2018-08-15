@@ -7,11 +7,11 @@
                 <v-toolbar-title>Login</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
-            <v-form @submit.prevent="login">
+            <v-form @submit.prevent="forgotPassword">
                 <v-card-text>
                     <v-text-field 
-                      prepend-icon="person" 
-                      name="login" 
+                      prepend-icon="person"
+                      name="username" 
                       label="Email" 
                       id="username"
                       type="text"
@@ -32,6 +32,33 @@
         </v-card>
         </v-flex>
     </v-layout>
+    <v-dialog v-model="alert" max-width="300">
+        <v-card>
+        <v-card-title
+          class="headline blue lighten-2"
+          primary-title
+        >
+          Forgot Password
+        </v-card-title>
+
+        <v-card-text>
+            A link to reset your password is sent to your email.
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            flat
+            @click="goLogin"
+          >
+            ok
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>>
   </v-container>
 </template>
 
@@ -62,13 +89,34 @@ import {uuid} from 'vue-uuid'
 export default {
   data () {
     return {
-      username: '',
-      pass: '',
-      error: false,
-      errorMessage: []
+        alert:false,
+        username: '',
+        pass: '',
+        error: false,
+        errorMessage: []
     }
   },
   methods: {
+    goLogin(){
+        this.$router.replace({ name: 'login'})
+    },
+    forgotPassword() {
+        var data = this
+        if(data.username.length > 0){
+          axios.post('https://www.educatucredito.com/resetpassword.php',
+          {
+            email: data.username,
+          }).then(function(response){
+            console.log(response)
+            data.alert = true
+            data.username = ''
+          }).catch(function (error) {
+            alert(error)
+          })
+        }else{
+          alert("Email is Required!")
+        }
+    },
     login () {
       var d = this
       axios.get(`${window.apiLink}login`, {
