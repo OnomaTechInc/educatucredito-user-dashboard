@@ -4,7 +4,7 @@
         <v-flex xs12 sm8 md4>
         <v-card class="elevation-12">
             <v-toolbar dark color="primary">
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title>Forgot Password</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
             <v-form @submit.prevent="forgotPassword">
@@ -32,10 +32,10 @@
         </v-card>
         </v-flex>
     </v-layout>
-    <v-dialog v-model="alert" max-width="300">
+    <v-dialog v-model="alert" max-width="500">
         <v-card>
         <v-card-title
-          class="headline blue lighten-2"
+          class="headline primary alertHead"
           primary-title
         >
           Forgot Password
@@ -54,7 +54,7 @@
             flat
             @click="goLogin"
           >
-            ok
+            Close
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -82,6 +82,9 @@ a {
   position: relative;
   top: 40px;
 }
+.alertHead{
+    color:white;
+}
 </style>
 <script>
 import axios from 'axios'
@@ -98,7 +101,7 @@ export default {
   },
   methods: {
     goLogin(){
-        this.$router.replace({ name: 'login'})
+        this.$router.replace({ name: 'Login' })
     },
     forgotPassword() {
         var data = this
