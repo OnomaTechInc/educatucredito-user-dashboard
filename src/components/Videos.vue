@@ -82,7 +82,7 @@ a {
 }
 </style>
 <script>
-  // import axios from 'axios'
+  import axios from 'axios'
   // import {uuid} from 'vue-uuid'
   import jQuery from 'jquery'
   import 'video.js/dist/video-js.css'
@@ -91,50 +91,7 @@ a {
   export default {
     data () {
       return {
-        items: [
-          {
-            title: 'Brunch this weekend?',
-            subtitle: "<span class='text--primary'>Ali Connors</span>",
-            player: {
-              muted: false,
-              fluid: true,
-              language: 'en',
-              playbackRates: [0.7, 1.0, 1.5, 2.0],
-              sources: [{
-                type: 'video/mp4',
-                src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm'
-              }]
-            }
-          },
-          {
-            title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-            subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span>",
-            player: {
-              muted: false,
-              fluid: true,
-              language: 'en',
-              playbackRates: [0.7, 1.0, 1.5, 2.0],
-              sources: [{
-                type: 'video/mp4',
-                src: 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4'
-              }]
-            }
-          },
-          {
-            title: 'Oui oui',
-            subtitle: "<span class='text--primary'>Sandra Adams</span>",
-            player: {
-              muted: false,
-              fluid: true,
-              language: 'en',
-              playbackRates: [0.7, 1.0, 1.5, 2.0],
-              sources: [{
-                type: 'video/mp4',
-                src: 'http://7xkwa7.media1.z0.glb.clouddn.com/sample_video_L'
-              }]
-            }
-          }
-        ],
+        items: [],
         playerOptions: {
           // videojs options
           muted: false,
@@ -143,12 +100,33 @@ a {
           playbackRates: [0.7, 1.0, 1.5, 2.0],
           sources: [{
             type: 'video/mp4',
-            src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm'
+            src: 'http://7xkwa7.media1.z0.glb.clouddn.com/sample_video_L'
           }]
         }
       }
     },
     created () {
+      var dis = this
+      axios.get(`${window.apiLink}videos/list`).then(function (response) {
+        for (var x = 0; x < response.data.length; x++) {
+          dis.items.push({
+            title: response.data.result[x].title,
+            subtitle: response.data.result[x].description,
+            player: {
+              muted: false,
+              fluid: true,
+              language: 'en',
+              playbackRates: [0.7, 1.0, 1.5, 2.0],
+              sources: [{
+                type: 'video/mp4',
+                src: response.data.result[x].video
+              }]
+            }
+          })
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
     },
     watch: {
     },

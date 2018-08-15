@@ -64,8 +64,8 @@
                     </video-player>
                   </v-flex >
                   <v-flex class="desc" xs12 sm12 md6 lg8>
-                    <h3 classs="text-underline">Lorem Ipsum</h3>
-                    <p>"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam, dolorum nihil tenetur modi fugit soluta sunt facilis non doloribus iure obcaecati itaque aliquid magnam cupiditate enim fuga cum pariatur quam!"</p>
+                    <h3 classs="text-underline">{{ vidTitle }}</h3>
+                    <p>{{ vidDesc }}</p>
                   </v-flex>
                 </v-card-title>
               </v-tab-item>
@@ -94,187 +94,29 @@
                 grid-list-lg
               >
                 <v-layout row wrap>
-                  <!-- <v-flex xs12 sm4>
-                    <v-card color="blue-grey darken-2" class="white--text">
-                      <v-card-title primary-title>
-                        <div class="headline">Unlimited music now</div>
-                        <div>Listen to your favorite artists and albums whenever and wherever, online and offline.</div>
-                      </v-card-title>
-                      <v-card-actions>
-                        <v-btn flat dark>Read more</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-flex> -->
-                  <v-flex xs12 sm12 md6 lg4>
+                  <v-flex xs12 sm12 md6 lg4 v-for="item in items">
                     <v-card color="purple" class="white--text">
                       <v-layout row>
                         <v-flex xs7>
                           <v-card-title primary-title>
                             <div>
-                              <div class="headline">Halycon Days</div>
-                              <div>Ellie Goulding</div>
-                              <div>(2013)</div>
+                              <div class="headline">{{ item.headline }}</div>
+                              <div>{{ item.subheader }}</div>
                             </div>
                           </v-card-title>
                         </v-flex>
                         <v-flex xs5>
-                          <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-                            height="125px"
-                            contain
-                          ></v-card-media>
+                          {{ item.excerpt }}
                         </v-flex>
                       </v-layout>
                       <v-divider light></v-divider>
                       <v-card-actions class="pa-3">
-                        <v-btn flat dark>Read more</v-btn>
+                        <v-btn flat dark @click="readmore">Read more</v-btn>
                         <v-spacer></v-spacer>
                       </v-card-actions>
                     </v-card>
                   </v-flex>
 
-                  <v-flex xs12 sm12 md6 lg4>
-                    <v-card color="cyan darken-2" class="white--text">
-                      <v-layout>
-                        <v-flex xs7>
-                          <v-card-title primary-title>
-                            <div>
-                              <div class="headline">Supermodel</div>
-                              <div>Foster the People</div>
-                              <div>(2014)</div>
-                            </div>
-                          </v-card-title>
-                        </v-flex>
-                        <v-flex xs5>
-                          <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
-                            height="125px"
-                            contain
-                          >
-                        </v-card-media>
-                        </v-flex>
-                      </v-layout>
-                      <v-divider light></v-divider>
-                      <v-card-actions class="pa-3">
-                        <v-btn flat dark>Read more</v-btn>
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-flex>
-
-                  <v-flex xs12 sm12 md6 lg4>
-                    <v-card color="purple" class="white--text">
-                      <v-layout row>
-                        <v-flex xs7>
-                          <v-card-title primary-title>
-                            <div>
-                              <div class="headline">Halycon Days</div>
-                              <div>Ellie Goulding</div>
-                              <div>(2013)</div>
-                            </div>
-                          </v-card-title>
-                        </v-flex>
-                        <v-flex xs5>
-                          <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-                            height="125px"
-                            contain
-                          ></v-card-media>
-                        </v-flex>
-                      </v-layout>
-                      <v-divider light></v-divider>
-                      <v-card-actions class="pa-3">
-                        <v-btn flat dark>Read more</v-btn>
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-flex>
-
-                  <v-flex xs12 sm12 md6 lg4>
-                    <v-card color="cyan darken-2" class="white--text">
-                      <v-layout>
-                        <v-flex xs7>
-                          <v-card-title primary-title>
-                            <div>
-                              <div class="headline">Supermodel</div>
-                              <div>Foster the People</div>
-                              <div>(2014)</div>
-                            </div>
-                          </v-card-title>
-                        </v-flex>
-                        <v-flex xs5>
-                          <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
-                            height="125px"
-                            contain
-                          >
-                        </v-card-media>
-                        </v-flex>
-                      </v-layout>
-                      <v-divider light></v-divider>
-                      <v-card-actions class="pa-3">
-                        <v-btn flat dark>Read more</v-btn>
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-flex>
-
-                  <v-flex xs12 sm12 md6 lg4>
-                    <v-card color="purple" class="white--text">
-                      <v-layout row>
-                        <v-flex xs7>
-                          <v-card-title primary-title>
-                            <div>
-                              <div class="headline">Halycon Days</div>
-                              <div>Ellie Goulding</div>
-                              <div>(2013)</div>
-                            </div>
-                          </v-card-title>
-                        </v-flex>
-                        <v-flex xs5>
-                          <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-                            height="125px"
-                            contain
-                          ></v-card-media>
-                        </v-flex>
-                      </v-layout>
-                      <v-divider light></v-divider>
-                      <v-card-actions class="pa-3">
-                        <v-btn flat dark>Read more</v-btn>
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-flex>
-
-                  <v-flex xs12 sm12 md6 lg4>
-                    <v-card color="cyan darken-2" class="white--text">
-                      <v-layout>
-                        <v-flex xs7>
-                          <v-card-title primary-title>
-                            <div>
-                              <div class="headline">Supermodel</div>
-                              <div>Foster the People</div>
-                              <div>(2014)</div>
-                            </div>
-                          </v-card-title>
-                        </v-flex>
-                        <v-flex xs5>
-                          <v-card-media
-                            src="https://cdn.vuetifyjs.com/images/cards/foster.jpg"
-                            height="125px"
-                            contain
-                          >
-                        </v-card-media>
-                        </v-flex>
-                      </v-layout>
-                      <v-divider light></v-divider>
-                      <v-card-actions class="pa-3">
-                        <v-btn flat dark>Read more</v-btn>
-                        <v-spacer></v-spacer>
-                      </v-card-actions>
-                    </v-card>
-                  </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -373,6 +215,8 @@ a {
           reader.readAsDataURL(val)
           d.$parent.$parent.photoIsLoaded = true
         },
+        vidTitle: '',
+        vidDesc: '',
         playerOptions: {
           // videojs options
           muted: false,
@@ -417,23 +261,44 @@ a {
         var d = this
         this.session = JSON.parse(localStorage.getItem('session'))
         axios.defaults.headers.common['Authorization'] = `bearer ${this.session.api_key}`
-        axios.get(`${window.apiLink}users/${d.session.id}`).then(function (response) {
-          // localStorage.setItem('session', JSON.stringify(response.data))
-          // d.$emit('setRoleName', response.data)
-          var items = []
-          // for (var x = 0; x < response.data.result.length; x++) {
-          items = {
-            id: response.data.result[0].id,
-            name: response.data.result[0].name,
-            avatar: response.data.result[0].user_image,
-            email: response.data.result[0].email,
-            role: response.data.result[0].role,
-            position: response.data.result[0].position,
-            company: response.data.result[0].company
-          }
-          // }
+        // fetch user data and agent
+        // axios.get(`${window.apiLink}myagents/${d.session.id}`).then(function (response) {
+        //   // localStorage.setItem('session', JSON.stringify(response.data))
+        //   // d.$emit('setRoleName', response.data)
+        //   var items = []
+        //   // for (var x = 0; x < response.data.result.length; x++) {
+        //   items = {
+        //     id: response.data.result[0].id,
+        //     name: response.data.result[0].name,
+        //     avatar: response.data.result[0].user_image,
+        //     email: response.data.result[0].email,
+        //     role: response.data.result[0].role,
+        //     position: response.data.result[0].position,
+        //     company: response.data.result[0].company
+        //   }
+        //   // }
+        //   d.loading = false
+        //   d.editedItem = items
+        // }).catch(function (error) {
+        //   console.log(error)
+        //   if (error.response !== undefined && error.response.status === 422) {
+        //     d.error = true
+        //     d.errorMessage = error.response.data.username
+        //   } else {
+        //     d.$emit('receiveAlertMessage', {
+        //       body: error.response.statusText,
+        //       type: 'error',
+        //       id: uuid.v4()
+        //     })
+        //   }
+        //   d.loading = false
+        // })
+        // fetch video
+        axios.get(`${window.apiLink}videos/`).then(function (response) {
+          d.vidTitle = response.data.result[0].title
+          d.vidDesc = response.data.result[0].description
+          d.playerOptions.sources.src = response.data.result[0].video
           d.loading = false
-          d.editedItem = items
         }).catch(function (error) {
           console.log(error)
           if (error.response !== undefined && error.response.status === 422) {
