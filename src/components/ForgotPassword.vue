@@ -12,7 +12,7 @@
                     <v-text-field 
                       prepend-icon="person" 
                       name="login" 
-                      label="Login" 
+                      label="Email" 
                       id="username"
                       type="text"
                       :error="error"
@@ -22,25 +22,13 @@
                       autocapitalize="none"
                     >
                     </v-text-field>
-                    <v-text-field 
-                      prepend-icon="lock" 
-                      name="password" 
-                      label="Password" 
-                      id="password" 
-                      type="password" 
-                      v-model="pass" 
-                      :error="error"
-                    ></v-text-field>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn type="submit" color="primary">Login</v-btn>
+                    <v-btn type="submit" color="primary">Submit</v-btn>
                 </v-card-actions>
             </v-form>
-            <div class="below_box" align="center">
-              <a href="/user/#/register">New user?Create your Account</a>
-              <a href="/user/#/forgotpassword" align="right">Forget Password?</a>
-            </div>
+            <div class="below_box" align="center"><a href="/user/#/login">Login</a></div>
         </v-card>
         </v-flex>
     </v-layout>
@@ -49,15 +37,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.below_box a{
-  position: absolute;;
-}
-.below_box a:first-child{
-  left: 0;
-}
-.below_box a:last-child{
-  right: 0;
-}
 h1, h2 {
   font-weight: normal;
 }
@@ -74,7 +53,7 @@ a {
 }
 .below_box {
   position: relative;
-  top: 20px;
+  top: 40px;
 }
 </style>
 <script>

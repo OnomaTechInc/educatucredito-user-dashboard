@@ -5,6 +5,7 @@ import Profile from '@/components/Profile'
 import Files from '@/components/Files'
 import Videos from '@/components/Videos'
 import Login from '@/components/Login'
+import ForgotPassword from '@/components/ForgotPassword'
 import Register from '@/components/Register'
 import PageNotFound from '@/components/404'
 import MyAccount2 from '@/components/MyAccount'
@@ -39,6 +40,14 @@ export default new Router({
     path: '/register',
     name: 'Register',
     component: Register,
+    meta: {
+      plainLayout: true
+    }
+  },
+  {
+    path: '/forgotpassword',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
     meta: {
       plainLayout: true
     }
