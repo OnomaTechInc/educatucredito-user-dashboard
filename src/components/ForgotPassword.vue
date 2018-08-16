@@ -92,33 +92,32 @@ import {uuid} from 'vue-uuid'
 export default {
   data () {
     return {
-        alert:false,
-        username: '',
-        pass: '',
-        error: false,
-        errorMessage: []
+      alert: false,
+      username: '',
+      pass: '',
+      error: false,
+      errorMessage: []
     }
   },
   methods: {
-    goLogin(){
-        this.$router.replace({ name: 'Login' })
+    goLogin () {
+      this.$router.replace({ name: 'Login' })
     },
-    forgotPassword() {
-        var data = this
-        if(data.username.length > 0){
-          axios.post('https://www.educatucredito.com/resetpassword.php',
-          {
-            email: data.username,
-          }).then(function(response){
-            console.log(response)
-            data.alert = true
-            data.username = ''
-          }).catch(function (error) {
-            alert(error)
-          })
-        }else{
-          alert("Email is Required!")
-        }
+    forgotPassword () {
+      var data = this
+      if (data.username.length > 0) {
+        axios.post('https://www.educatucredito.com/resetpassword.php', {
+          email: data.username
+        }).then(function (response) {
+          console.log(response)
+          data.alert = true
+          data.username = ''
+        }).catch(function (error) {
+          alert(error)
+        })
+      } else {
+        alert('Email is Required!')
+      }
     },
     login () {
       var d = this

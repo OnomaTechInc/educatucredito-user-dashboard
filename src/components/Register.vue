@@ -47,6 +47,13 @@
                       min="8"
                       counter
                     ></v-text-field>
+                    <v-select
+                      prepend-icon="group" 
+                      :items="roleItems"
+                      v-model="role"
+                      label="Register As"
+                      persistent-hint
+                    ></v-select>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -91,6 +98,8 @@ export default {
       username: '',
       name: '',
       pass: '',
+      role: '',
+      roleItems: ['Customer', 'Broker', 'Both'],
       error: false,
       errorMessage: []
     }
@@ -101,7 +110,8 @@ export default {
       axios.post(`${window.apiLink}register`, {
         email: this.username,
         password: this.pass,
-        name: this.name
+        name: this.name,
+        role: this.role
       }).then(function (response) {
         if (response.data.status === 'error') {
           d.$emit('receiveAlertMessage', {
