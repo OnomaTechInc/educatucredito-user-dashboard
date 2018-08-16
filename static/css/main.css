@@ -825,13 +825,16 @@ section .container p {
 #dashboard .profileInfo li:before {
   display: none;
 }
-
+#dashboard .videoHolder{
+  padding: 0 15px;
+}
 #dashboard .videoHolder .v-card__title {
   padding-left: 0;
 }
 
 #dashboard .desc {
-  padding-left: 40px;
+  border: 1px solid #ddd;
+  padding: 15px;
 }
 
 #dashboard .desc h3 {

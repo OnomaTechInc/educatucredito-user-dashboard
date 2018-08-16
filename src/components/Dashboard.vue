@@ -4,9 +4,29 @@
       <v-layout column align-center>
         <v-container pl-3 pr-3>
           <v-card flat>
+
             <v-flex xs12 sm12 md12 lg12 text-center>
                 <h1 class="heading">WELCOME!</h1>
             </v-flex>
+                      <v-card flat class="site">
+            <v-container fluid>
+              <v-layout row wrap>
+              <v-flex xs12 sm12 md4 text-center>
+                <img
+                  title="click here to change photo"
+                  src="../../static/img/sitelogo.png"
+                  alt=""
+                  width="283"
+                  height="225"
+                >   
+              </v-flex>
+              <v-flex xs12 sm12 md8 class="infos">
+                <h3>Educa tu Credito</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsam ducimus tempore ad aspernatur ratione, ipsum quam qui velit aperiam doloribus corporis possimus quo harum assumenda, maxime itaque dolorum cum.</p>
+              </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
             <v-tabs 
               fixed-tabs 
               v-model="model"
@@ -48,10 +68,12 @@
                 </v-card-title>
                 <v-divider></v-divider>
                 <v-card-title>
-                  <v-flex xs12 sm12 md6 lg4 class="videoHolder">
+                  <v-flex  xs12>
                     <v-card-title>
-                    <h3>Video</h3>
+                      <h3>Video</h3>
                     </v-card-title>
+                  </v-flex>
+                  <v-flex xs12 sm12 md6 lg6 class="videoHolder">
                     <video-player
                       class="video-player-box"
                       ref="videoPlayer"
@@ -59,11 +81,24 @@
                       :playsinline="true"
                     >
                     </video-player>
+                    <v-flex class="desc" xs12>
+                      <h3 classs="text-underline">{{ vidTitle }}</h3>
+                      <p>{{ vidDesc }}</p>
+                    </v-flex>
                   </v-flex >
-                  <v-flex class="desc" xs12 sm12 md6 lg8>
-                    <h3 classs="text-underline">{{ vidTitle }}</h3>
-                    <p>{{ vidDesc }}</p>
-                  </v-flex>
+                  <v-flex xs12 sm12 md6 lg6 class="videoHolder">
+                    <video-player
+                      class="video-player-box"
+                      ref="videoPlayer"
+                      :options="playerOptions"
+                      :playsinline="true"
+                    >
+                    </video-player>
+                    <v-flex class="desc" xs12>
+                      <h3 classs="text-underline">{{ vidTitle }}</h3>
+                      <p>{{ vidDesc }}</p>
+                    </v-flex>
+                  </v-flex >
                 </v-card-title>
               </v-tab-item>
 
@@ -101,12 +136,17 @@
                           <v-card-title primary-title>
                             <div>
                               <div class="headline">{{ item.headline }}</div>
-                              <div>{{ item.subheader }}</div>
+                              <div class="subhead">{{ item.subheader }}</div>
                             </div>
                           </v-card-title>
                         </v-flex>
-                        <v-flex xs5>
-                          {{ item.excerpt }}
+                        <v-flex xs5 class="newsPic">
+                          <img src="" alt="">
+                        </v-flex>
+                      </v-layout>
+                      <v-layout>
+                        <v-flex xs12 >
+                          <p class="shortDesc">{{ item.excerpt }}</p>
                         </v-flex>
                       </v-layout>
                       <v-divider light></v-divider>
@@ -119,25 +159,6 @@
                 </v-layout>
               </v-container>
             </v-card-text>
-          </v-card>
-          <v-card flat class="site">
-            <v-container fluid>
-              <v-layout row wrap>
-              <v-flex xs12 sm12 md4 text-center>
-                <img
-                  title="click here to change photo"
-                  src="../../static/img/sitelogo.png"
-                  alt=""
-                  width="283"
-                  height="225"
-                >   
-              </v-flex>
-              <v-flex xs12 sm12 md8 class="infos">
-                <h3>Educa tu Credito</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsam ducimus tempore ad aspernatur ratione, ipsum quam qui velit aperiam doloribus corporis possimus quo harum assumenda, maxime itaque dolorum cum.</p>
-              </v-flex>
-              </v-layout>
-            </v-container>
           </v-card>
         </v-container>
       </v-layout>
@@ -194,6 +215,30 @@ a {
 }
 .formArea{
   padding:0 15px;
+}
+.headline{
+  width: 162px;
+  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.subhead{
+  width: 162px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.newsPic img{
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+.shortDesc{
+  padding: 0 16px;
+  height: 95px;
+  overflow: hidden;
 }
 </style>
 <script>
@@ -331,7 +376,7 @@ a {
               id: response.data.result[i].id,
               headline: response.data.result[i].headline,
               subheader: response.data.result[i].subheader,
-              excerpt: response.data.result[i].description,
+              excerpt: response.data.result[i].excerpt,
               content: response.data.result[i].content
             })
             d.newsItems = itm
