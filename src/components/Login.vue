@@ -7,6 +7,8 @@
                 <v-toolbar-title>Login</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
+            <v-btn type="submit" color="primary" @click="openFbLoginDialog">FB Login</v-btn>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <v-form @submit.prevent="login">
                 <v-card-text>
                     <v-text-field 
@@ -90,6 +92,62 @@ export default {
     }
   },
   methods: {
+      register (profile) {
+      var d = this
+      axios.post(`${window.apiLink}register`, {
+        email: profile.email,
+        name: profile.name,
+        role: 'Customer',
+        api_key: profile.token
+      }).then(function (response) {
+        if (response.data.status === 'error') {
+          d.$emit('receiveAlertMessage', {
+            body: response.data.message,
+            type: 'error',
+            id: uuid.v4()
+          })
+        } else if (response.data.status === 'validation_error') {
+          d.error = true
+          // console.log(response.data.message)
+          d.errorMessage = response.data.message
+        } else {
+          // localStorage.setItem('session', JSON.stringify(response.data))
+          // d.$emit('setRoleName', response.data)
+          // d.$router.replace({ name: 'Das' })
+        }
+      }).catch(function (error) {
+        d.$emit('receiveAlertMessage', {
+          body: error,
+          type: 'error',
+          id: uuid.v4()
+        })
+      })
+    },
+    openFbLoginDialog () {
+      FB.login(this.checkLoginState, { scope: 'email' })
+    },
+    checkLoginState: function (response) {
+    var account = this
+      if (response.status === 'connected') {
+        console.log(response.authResponse.accessToken)
+        FB.api('/me', { fields: 'name,email,id' }, function(profile) {
+          var profile = {
+            token: response.authResponse.accessToken,
+            name: profile.name,
+            email:profile.email,
+            id: profile.id
+          }
+          console.log('Good to see you, ' + profile.name + ' '+ profile.email + '.');
+          console.log(profile)
+          account.register(profile)
+        });
+      } else if (response.status === 'not_authorized') {
+        // the user is logged in to Facebook, 
+        // but has not authenticated your app
+      } else {
+        // the user isn't logged in to Facebook.
+      }
+    },
     login () {
       var d = this
       axios.get(`${window.apiLink}login`, {
