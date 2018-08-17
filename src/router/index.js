@@ -9,6 +9,7 @@ import ForgotPassword from '@/components/ForgotPassword'
 import Register from '@/components/Register'
 import PageNotFound from '@/components/404'
 import MyAccount2 from '@/components/MyAccount'
+import Agents from '@/components/Agents'
 
 Vue.use(Router)
 
@@ -76,6 +77,12 @@ export default new Router({
     path: '/myaccount',
     name: 'MyAccount',
     component: MyAccount2,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/agents',
+    name: 'Agents',
+    component: Agents,
     beforeEnter: requireAuth
   },
   {

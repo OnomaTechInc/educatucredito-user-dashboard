@@ -9,7 +9,6 @@ import store from './store'
 import App from './App'
 import router from './router'
 // import colors from 'vuetify/es5/util/colors'
-
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 Vue.use(VueCordova)

@@ -331,6 +331,11 @@
             title: 'Videos',
             link: '/videos'
           },
+          {
+            icon: 'assignment_ind',
+            title: 'Agents',
+            link: '/agents'
+          },
           // {
           //   icon: 'attach_file',
           //   title: 'Files',
