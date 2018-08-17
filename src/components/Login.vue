@@ -8,7 +8,6 @@
                 <v-spacer></v-spacer>
             </v-toolbar>
             <v-btn type="submit" color="primary" @click="openFbLoginDialog">FB Login</v-btn>
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <v-form @submit.prevent="login">
                 <v-card-text>
                     <v-text-field 
@@ -92,13 +91,15 @@ export default {
     }
   },
   methods: {
-      register (profile) {
+      register (data) {
+        console.log(data)
       var d = this
       axios.post(`${window.apiLink}register`, {
-        email: profile.email,
-        name: profile.name,
+        email: data.email,
+        name: data.name,
         role: 'Customer',
-        api_key: profile.token
+        fb_id: data.id,
+        api_key: data.token
       }).then(function (response) {
         if (response.data.status === 'error') {
           d.$emit('receiveAlertMessage', {
@@ -114,6 +115,8 @@ export default {
           // localStorage.setItem('session', JSON.stringify(response.data))
           // d.$emit('setRoleName', response.data)
           // d.$router.replace({ name: 'Das' })
+          localStorage.setItem('session', JSON.stringify(profile.token))
+          d.$router.replace({ name: 'Dashboard'})
         }
       }).catch(function (error) {
         d.$emit('receiveAlertMessage', {
@@ -129,17 +132,14 @@ export default {
     checkLoginState: function (response) {
     var account = this
       if (response.status === 'connected') {
-        console.log(response.authResponse.accessToken)
         FB.api('/me', { fields: 'name,email,id' }, function(profile) {
-          var profile = {
+          var info = {
             token: response.authResponse.accessToken,
             name: profile.name,
             email:profile.email,
             id: profile.id
           }
-          console.log('Good to see you, ' + profile.name + ' '+ profile.email + '.');
-          console.log(profile)
-          account.register(profile)
+          account.register(info)
         });
       } else if (response.status === 'not_authorized') {
         // the user is logged in to Facebook, 
