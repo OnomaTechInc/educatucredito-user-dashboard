@@ -8,6 +8,7 @@ import Login from '@/components/Login'
 import ForgotPassword from '@/components/ForgotPassword'
 import Register from '@/components/Register'
 import PageNotFound from '@/components/404'
+import Oauth2callback from '@/components/Oauth2callback'
 import MyAccount2 from '@/components/MyAccount'
 import Agents from '@/components/Agents'
 
@@ -71,6 +72,12 @@ export default new Router({
     path: '/',
     name: 'Home',
     component: Dashboard,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/oauth2callback',
+    name: 'Oauth2callbackk',
+    component: Oauth2callback,
     beforeEnter: requireAuth
   },
   {
