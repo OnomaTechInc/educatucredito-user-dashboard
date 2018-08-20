@@ -50,19 +50,15 @@
                     style="background: #fff"
                     light
                   >
-                    <img
-                      v-if="agentAvatar"
-                      :src="agentAvatar"
-                      alt=""
-                    >
-                  <span class="black--text" v-else><v-icon size="108">account_circle</v-icon></span>
+                    <!-- <img> -->
+                  <span class="black--text"><v-icon size="108">account_circle</v-icon></span>
                   </v-avatar>
                   <v-flex class="profileInfo">
-                    <h3>{{ agentName }}</h3>
+                    <h3>Agent Name</h3>
                     <ul>
-                      <li>{{ agentEmail }}</li>
-                      <li>{{ agentContact }}</li>
-                      <li>{{ agentAddress }}</li>
+                      <li>Agent email</li>
+                      <li>Agent Contact</li>
+                      <li>Agent Location</li>
                     </ul>
                   </v-flex>  
                 </v-card-title>
@@ -253,11 +249,11 @@ a {
         newsHeadline: '',
         newsSubheader: '',
         newsContent: '',
-        agentName: '',
-        agentEmail: '',
-        agentContact: '',
-        agentAddress: '',
-        agentAvatar: '',
+        // agentName: '',
+        // agentEmail: '',
+        // agentContact: '',
+        // agentAddress: '',
+        // agentAvatar: '',
         translationText: [],
         dialog: true,
         model: 'tab-profile',
@@ -328,11 +324,11 @@ a {
         // fetch user data and agent
         axios.get(`${window.apiLink}users/${d.session.id}`).then(function (response) {
           // console.log(response)
-          d.agentName = response.data.result[0].agent.name
-          d.agentEmail = response.data.result[0].agent.email
-          d.agentContact = response.data.result[0].agent.contact_number
-          d.agentAddress = response.data.result[0].agent.location
-          d.agentAvatar = response.data.result[0].agent.user_image
+          // d.agentName = response.data.result[0].agent.name
+          // d.agentEmail = response.data.result[0].agent.email
+          // d.agentContact = response.data.result[0].agent.contact_number
+          // d.agentAddress = response.data.result[0].agent.location
+          // d.agentAvatar = response.data.result[0].agent.user_image
           d.loading = false
         }).catch(function (error) {
           console.log(error)

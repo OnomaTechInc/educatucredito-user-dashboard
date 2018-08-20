@@ -7,7 +7,6 @@
                 <v-toolbar-title>Login</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
-            <v-btn type="submit" color="primary" @click="openFbLoginDialog">FB Login</v-btn>
             <v-form @submit.prevent="login">
                 <v-card-text>
                     <v-text-field 
@@ -32,14 +31,19 @@
                       v-model="pass" 
                       :error="error"
                     ></v-text-field>
+                    <v-btn type="submit" block color="">Login</v-btn>
                 </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn type="submit" color="primary">Login</v-btn>
-                </v-card-actions>
+                <v-divider></v-divider>
+                <v-card>
+                  <v-card-text>
+                    <v-btn type="submit" block color="primary" @click="openFbLoginDialog">Sign in with Facebook</v-btn>
+                    <center>OR</center>
+                    <v-btn type="submit" block color="red" dark>Sign in with Google</v-btn>
+                  </v-card-text>
+                </v-card>
             </v-form>
             <div class="below_box" align="center">
-              <a href="/user/#/register">New user?Create your Account</a>
+              <a href="/user/#/register">New user? Create your Account</a>
               <a href="/user/#/forgotpassword" align="right">Forget Password?</a>
             </div>
         </v-card>
@@ -91,8 +95,8 @@ export default {
     }
   },
   methods: {
-      register (data) {
-        console.log(data)
+    register (data) {
+      console.log(data)
       var d = this
       axios.post(`${window.apiLink}register`, {
         email: data.email,
@@ -115,8 +119,8 @@ export default {
           // localStorage.setItem('session', JSON.stringify(response.data))
           // d.$emit('setRoleName', response.data)
           // d.$router.replace({ name: 'Das' })
-          localStorage.setItem('session', JSON.stringify(profile.token))
-          d.$router.replace({ name: 'Dashboard'})
+          localStorage.setItem('session', JSON.stringify(data.token))
+          d.$router.replace({name: 'Dashboard'})
         }
       }).catch(function (error) {
         d.$emit('receiveAlertMessage', {
@@ -127,22 +131,22 @@ export default {
       })
     },
     openFbLoginDialog () {
-      FB.login(this.checkLoginState, { scope: 'email' })
+      window.FB.login(this.checkLoginState, { scope: 'email' })
     },
     checkLoginState: function (response) {
-    var account = this
+      var account = this
       if (response.status === 'connected') {
-        FB.api('/me', { fields: 'name,email,id' }, function(profile) {
+        window.FB.api('/me', { fields: 'name,email,id' }, function (profile) {
           var info = {
             token: response.authResponse.accessToken,
             name: profile.name,
-            email:profile.email,
+            email: profile.email,
             id: profile.id
           }
           account.register(info)
-        });
+        })
       } else if (response.status === 'not_authorized') {
-        // the user is logged in to Facebook, 
+        // the user is logged in to Facebook,
         // but has not authenticated your app
       } else {
         // the user isn't logged in to Facebook.
