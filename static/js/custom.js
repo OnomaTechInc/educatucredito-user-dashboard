@@ -13,4 +13,9 @@ $(document).ready(function(){
         })
       }
     }
+
+    $('#buttontext').on('click',function(){
+      $('.abcRioButtonLightBlue').click();
+      console.log('clicked');
+    })
 })

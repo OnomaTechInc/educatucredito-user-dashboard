@@ -38,9 +38,9 @@
                   <v-card-text>
                     <v-btn type="submit" block color="primary" @click="openFbLoginDialog">Sign in with Facebook</v-btn>
                     <center>OR</center>
-                    <v-btn type="submit" block color="red" dark>Sign in with Google</v-btn>
+                    <v-btn id="buttontext" block color="red" dark>Sign in with Google</v-btn>
                     <!-- <div class="g-signin2" data-onsuccess="googleSignin()"></div> -->
-                    <div id="google-signin-btn"></div>
+                    <div id="google-signin-btn" hidden></div>
                     <v-btn @click="signOut" >Sign out</v-btn>
                   </v-card-text>
                 </v-card>
@@ -122,12 +122,6 @@ export default {
       console.log('Email: ' + profile.getEmail()) // This is null if the 'email' scope is not present.
       var id_token = user.getAuthResponse().id_token
       console.log("ID Token: " + id_token)
-    },
-    signmeIn(){
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signIn().then(function () {
-        console.log('User signed In.');
-      });
     },
     signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
