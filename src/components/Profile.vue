@@ -142,7 +142,7 @@ a {
   left: 50%;
   top: -60px;
   transform: translateX(-50%);
-  z-index: 999;
+  z-index: 3;
 }
 .v-input__control{
   padding:0 15px;

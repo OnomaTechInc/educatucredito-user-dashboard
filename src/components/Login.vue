@@ -38,10 +38,7 @@
                   <v-card-text>
                     <v-btn type="submit" block color="primary" @click="openFbLoginDialog">Sign in with Facebook</v-btn>
                     <center>OR</center>
-                    <v-btn type="submit" block color="red" dark>Sign in with Google</v-btn>
-                    <!-- <div class="g-signin2" data-onsuccess="googleSignin()"></div> -->
-                    <div id="google-signin-btn"></div>
-                    <v-btn @click="signOut" >Sign out</v-btn>
+                    <v-btn id="google-signin-btn" type="submit" block color="red" dark>Sign in with Google</v-btn>
                   </v-card-text>
                 </v-card>
             </v-form>
@@ -97,8 +94,8 @@ export default {
       errorMessage: []
     }
   },
-  mounted() {
-    gapi.signin2.render('google-signin-btn', { // this is the button "id"
+  mounted () {
+    window.gapi.signin2.render('google-signin-btn', { // this is the button "id"
       onsuccess: this.onSignIn // note, no "()" here
     })
   },
@@ -120,20 +117,9 @@ export default {
       console.log('Name: ' + profile.getName())
       console.log('Image URL: ' + profile.getImageUrl())
       console.log('Email: ' + profile.getEmail()) // This is null if the 'email' scope is not present.
-      var id_token = user.getAuthResponse().id_token
-      console.log("ID Token: " + id_token)
-    },
-    signmeIn(){
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signIn().then(function () {
-        console.log('User signed In.');
-      });
-    },
-    signOut() {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log('User signed out.');
-      });
+      var idToken = user.getAuthResponse().id_token
+      console.log('ID Token: ' + idToken)
+      this.$router.replace({name: 'Dashboard'})
     },
     register (data) {
       console.log(data)
@@ -230,15 +216,4 @@ export default {
     }
   }
 }
-function signIn (googleUser){
-   console.log('hello world!1')
-   // var profile = googleUser.getBasicProfile()
-   // console.log('ID: ' + profile.getId())// Do not send to your backend! Use an ID token instead.
-   // console.log('Name: ' + profile.getName())
-   // console.log('Image URL: ' + profile.getImageUrl())
-   // console.log('Email: ' + profile.getEmail()) // This is null if the 'email' scope is not present.
-   // var id_token = googleUser.getAuthResponse().id_token
-   // console.log("ID Token: " + id_token)
- }
-//  signIn();
 </script>

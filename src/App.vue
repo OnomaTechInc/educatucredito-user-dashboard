@@ -319,22 +319,22 @@
           {
             icon: 'dashboard',
             title: 'Dashboard',
-            link: '/dashboard'
+            link: '/user/dashboard'
           },
           {
             icon: 'account_balance',
             title: 'My Account',
-            link: '/myaccount'
+            link: '/user/myaccount'
           },
           {
             icon: 'live_tv',
             title: 'Videos',
-            link: '/videos'
+            link: '/user/videos'
           },
           {
             icon: 'assignment_ind',
             title: 'Agents',
-            link: '/agents'
+            link: '/user/agents'
           },
           // {
           //   icon: 'attach_file',
@@ -344,7 +344,7 @@
           {
             icon: 'account_circle',
             title: 'Profile',
-            link: '/profile'
+            link: '/user/profile'
           }
         ]
       },
@@ -357,6 +357,11 @@
           if (confirmation) {
             this.session = []
             window.localStorage.setItem('session', '[]')
+            // var auth2 = window.gapi.auth2.getAuthInstance()
+            // if (auth2) {
+            //   auth2.signOut().then(function () {
+            //   })
+            // }
             d.$router.replace({ name: 'Logout' })
           }
         })
@@ -403,6 +408,11 @@
 </script>
 
 <style>
+@media only screen and (max-width: 767px) {
+  .v-overlay.v-overlay--active {
+    z-index: 1;
+  }
+}
   .container {
     padding: 0;
   }
