@@ -17,5 +17,15 @@ $(document).ready(function(){
     $('#buttontext').on('click',function(){
       $('.abcRioButtonLightBlue').click();
       console.log('clicked');
-    })
+    });
+    $('#btnSignout').on('click',function(){
+      signOutme();
+    });
+    // signOutme();
+    function signOutme(){
+      var auth2 = window.gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    }
 })

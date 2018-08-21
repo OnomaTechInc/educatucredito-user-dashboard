@@ -50,7 +50,7 @@
     <script src="https://fast.wistia.com/embed/medias/h4z90hkwgl.jsonp" async></script>
     <script src="https://fast.wistia.com/embed/medias/xbiw6z7e9l.jsonp" async></script>
     <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '42dfb0ff-1d3a-40f3-bf96-da6b9f64cd99', f: true }); done = true; } }; })();</script>
     <script>
       window.fbAsyncInit = function() {
@@ -82,19 +82,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-    <script src="static/js/custom.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="../static/js/custom.js"></script>
     <!-- <script src="https://apis.google.com/js/api.js"></script> -cd -->
     <script>
-    function googleSignin (googleUser){
-        console.log('hello world!1')
-        // var profile = googleUser.getBasicProfile()
-        // console.log('ID: ' + profile.getId())// Do not send to your backend! Use an ID token instead.
-        // console.log('Name: ' + profile.getName())
-        // console.log('Image URL: ' + profile.getImageUrl())
-        // console.log('Email: ' + profile.getEmail()) // This is null if the 'email' scope is not present.
-        // var id_token = googleUser.getAuthResponse().id_token
-        // console.log("ID Token: " + id_token)
-      }
-  </script>
+    function onLoad() {
+      console.log('loaded')
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+    </script>
   </body>
 </html>

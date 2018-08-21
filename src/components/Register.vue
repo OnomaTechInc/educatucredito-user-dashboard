@@ -60,7 +60,7 @@
                     <v-btn type="submit" color="primary">Submit</v-btn>
                 </v-card-actions>
             </v-form>
-            <div class="below_box" align="center"><a href="/user/#/login">Already member? Login to your account</a></div>
+            <div class="below_box" align="center"><a href="/user/login">Already member? Login to your account</a></div>
         </v-card>
         </v-flex>
     </v-layout>

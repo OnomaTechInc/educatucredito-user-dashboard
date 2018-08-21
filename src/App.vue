@@ -203,7 +203,7 @@
         </a>
       </v-btn>
     </v-speed-dial>
-
+    <div id="btnSignout">12321</div>
   </v-app>
 </template>
 
@@ -319,22 +319,22 @@
           {
             icon: 'dashboard',
             title: 'Dashboard',
-            link: '/dashboard'
+            link: '/user/dashboard'
           },
           {
             icon: 'account_balance',
             title: 'My Account',
-            link: '/myaccount'
+            link: '/user/myaccount'
           },
           {
             icon: 'live_tv',
             title: 'Videos',
-            link: '/videos'
+            link: '/user/videos'
           },
           {
             icon: 'assignment_ind',
             title: 'Agents',
-            link: '/agents'
+            link: '/user/agents'
           },
           // {
           //   icon: 'attach_file',
@@ -344,7 +344,7 @@
           {
             icon: 'account_circle',
             title: 'Profile',
-            link: '/profile'
+            link: '/user/profile'
           }
         ]
       },
@@ -357,7 +357,11 @@
           if (confirmation) {
             this.session = []
             window.localStorage.setItem('session', '[]')
-            d.$router.replace({ name: 'Logout' })
+            $('#btnSignout').click()
+            setTimeout(function() {
+              d.$router.replace({ name: 'Logout' })
+            }, 2000)
+
           }
         })
       },
@@ -403,6 +407,11 @@
 </script>
 
 <style>
+@media only screen and (max-width: 767px) {
+  .v-overlay.v-overlay--active {
+    z-index: 1;
+  }
+}
   .container {
     padding: 0;
   }
