@@ -34,17 +34,37 @@
                       <v-layout wrap>
                         <v-flex xs12 sm12 md12>
                           <v-text-field 
-                            v-model="editedItem.name" 
+                            v-model="editedItem.cname" 
                             label="Name"
                           ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm12 md12>
-                          <v-text-field 
-                            v-model="editedItem.duedate" 
-                            label="Due Date"
-                          ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm12 md12>
+                          </v-flex>
+                            <v-flex xs12>
+                            <v-menu
+                              ref="menu"
+                              :close-on-content-click="false"
+                              v-model="menu"
+                              :nudge-right="40"
+                              :return-value.sync="date"
+                              lazy
+                              transition="scale-transition"
+                              offset-y
+                              full-width
+                              min-width="290px"
+                              >
+                              <v-text-field
+                                slot="activator"
+                                v-model="editedItem.duedate"
+                                label="Due Date"
+                                readonly
+                              ></v-text-field>
+                              <v-date-picker v-model="editedItem.duedate" no-title scrollable>
+                                <v-spacer></v-spacer>
+                                <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                                <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                              </v-date-picker>
+                            </v-menu>
+                          </v-flex>
+                          <v-flex xs12 sm12 md12>
                           <v-text-field 
                             v-model="editedItem.amount" 
                             label="Amount"
@@ -165,6 +185,8 @@ a {
   export default {
     data () {
       return {
+        menu:'',
+        date:false,
         session: [],
         dialog: false,
         loading: false,
@@ -275,7 +297,9 @@ a {
         data.append('file', document.getElementById('uploadFile').files[0])
         var O = Object
         if (this.editedIndex > -1) {
+          console.log('edit')
           axios.post(`${window.apiLink}accounts/${d.editedItem.id}`, {
+            name: d.editedItem.cname,
             due_date: d.editedItem.duedate,
             reported: d.editedItem.reported,
             amount: d.editedItem.amount,
@@ -304,6 +328,7 @@ a {
           })
         } else {
           axios.post(`${window.apiLink}accounts/`, {
+            name:d.editedItem.cname,
             user_id: d.session.id,
             due_date: d.editedItem.duedate,
             reported: d.editedItem.reported,
@@ -313,7 +338,7 @@ a {
           }).then(function (res) {
             // console.log('editedItem: ', d.editedItem)
             d.editedItem.id = res.data.last_insert_id
-            d.items.push(d.editedItem)
+            console.log(d.items)
             // console.log('items: ', d.items)
             d.$emit('receiveAlertMessage', {
               body: 'User has been successfully save.',
