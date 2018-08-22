@@ -28,7 +28,7 @@
                     <v-btn type="submit" color="primary">Submit</v-btn>
                 </v-card-actions>
             </v-form>
-            <div class="below_box" align="center"><a href="/user/#/login">Login</a></div>
+            <div class="below_box" align="center"><a href="/login">Login</a></div>
         </v-card>
         </v-flex>
     </v-layout>

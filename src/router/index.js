@@ -16,9 +16,9 @@ Vue.use(Router)
 
 function requireAuth (to, from, next) {
   var authenticated = localStorage.getItem('session')
-  if (authenticated === null) {
+  if (authenticated === null || authenticated === '[]') {
     next({
-      path: '/user/login',
+      path: '/login',
       query: {
         redirect: to.fullPath
       }
@@ -31,7 +31,7 @@ function requireAuth (to, from, next) {
 export default new Router({
   mode: 'history',
   routes: [{
-    path: '/user/login',
+    path: '/login',
     name: 'Login',
     component: Login,
     meta: {
@@ -39,7 +39,7 @@ export default new Router({
     }
   },
   {
-    path: '/user/register',
+    path: '/register',
     name: 'Register',
     component: Register,
     meta: {
@@ -47,7 +47,7 @@ export default new Router({
     }
   },
   {
-    path: '/user/forgotpassword',
+    path: '/forgotpassword',
     name: 'ForgotPassword',
     component: ForgotPassword,
     meta: {
@@ -55,7 +55,7 @@ export default new Router({
     }
   },
   {
-    path: '/user/logout',
+    path: '/logout',
     name: 'Logout',
     component: Login,
     meta: {
@@ -63,55 +63,55 @@ export default new Router({
     }
   },
   {
-    path: '/user/dashboard',
+    path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
     beforeEnter: requireAuth
   },
   {
-    path: '/user',
+    path: '/',
     name: 'Home',
     component: Dashboard,
     beforeEnter: requireAuth
   },
   {
-    path: '/user/oauth2callback',
+    path: '/oauth2callback',
     name: 'Oauth2callbackk',
     component: Oauth2callback,
     beforeEnter: requireAuth
   },
   {
-    path: '/user/myaccount',
+    path: '/myaccount',
     name: 'MyAccount',
     component: MyAccount2,
     beforeEnter: requireAuth
   },
   {
-    path: '/user/agents',
+    path: '/agents',
     name: 'Agents',
     component: Agents,
     beforeEnter: requireAuth
   },
   {
-    path: '/user/profile',
+    path: '/profile',
     name: 'Profile',
     component: Profile,
     beforeEnter: requireAuth
   },
   {
-    path: '/user/files',
+    path: '/files',
     name: 'Files',
     component: Files,
     beforeEnter: requireAuth
   },
   {
-    path: '/user/videos',
+    path: '/videos',
     name: 'Videos',
     component: Videos,
     beforeEnter: requireAuth
   },
   {
-    path: '/user/*',
+    path: '*',
     name: 'PageNotFound',
     component: PageNotFound
   }

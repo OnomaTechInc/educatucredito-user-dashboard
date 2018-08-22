@@ -203,13 +203,15 @@
         </a>
       </v-btn>
     </v-speed-dial>
-    <div id="btnSignout">12321</div>
+    <div id="btnSignout"></div>
   </v-app>
 </template>
 
 <script>
   import ConfirmDialog from './components/ConfirmDialog'
   import Vue from 'vue'
+  import jQuery from 'jquery'
+  window.$ = window.jQuery = jQuery
   export default {
     data () {
       return {
@@ -319,22 +321,22 @@
           {
             icon: 'dashboard',
             title: 'Dashboard',
-            link: '/user/dashboard'
+            link: '/dashboard'
           },
           {
             icon: 'account_balance',
             title: 'My Account',
-            link: '/user/myaccount'
+            link: '/myaccount'
           },
           {
             icon: 'live_tv',
             title: 'Videos',
-            link: '/user/videos'
+            link: '/videos'
           },
           {
             icon: 'assignment_ind',
             title: 'Agents',
-            link: '/user/agents'
+            link: '/agents'
           },
           // {
           //   icon: 'attach_file',
@@ -344,7 +346,7 @@
           {
             icon: 'account_circle',
             title: 'Profile',
-            link: '/user/profile'
+            link: '/profile'
           }
         ]
       },
@@ -357,11 +359,10 @@
           if (confirmation) {
             this.session = []
             window.localStorage.setItem('session', '[]')
-            $('#btnSignout').click()
-            setTimeout(function() {
+            window.$('#btnSignout').click()
+            setTimeout(function () {
               d.$router.replace({ name: 'Logout' })
             }, 2000)
-
           }
         })
       },
