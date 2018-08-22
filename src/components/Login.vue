@@ -44,8 +44,8 @@
                 </v-card>
             </v-form>
             <div class="below_box" align="center">
-              <a href="/user/register">New user? Create your Account</a>
-              <a href="/user/forgotpassword" align="right">Forget Password?</a>
+              <a href="/register">New user? Create your Account</a>
+              <a href="/forgotpassword" align="right">Forget Password?</a>
             </div>
         </v-card>
         </v-flex>
@@ -86,6 +86,8 @@ a {
 <script>
 import axios from 'axios'
 import {uuid} from 'vue-uuid'
+import jQuery from 'jquery'
+window.$ = window.jQuery = jQuery
 export default {
   data () {
     return {
@@ -111,8 +113,8 @@ export default {
     //   // var id_token = googleUser.getAuthResponse().id_token
     //   // console.log("ID Token: " + id_token)
     // },
-    gmailLogin(){
-      $('.abcRioButtonLightBlue').click();
+    gmailLogin () {
+      window.$('.abcRioButtonLightBlue').click()
     },
     onSignIn (user) {
       var gmailAccount = this
@@ -125,23 +127,23 @@ export default {
       var idToken = user.getAuthResponse().id_token
       console.log('ID Token: ' + idToken)
       var gmailInfo = {
-        name:profile.getName(),
-        email:profile.getEmail(),
-        id:profile.getId(),
-        token:idToken
+        name: profile.getName(),
+        email: profile.getEmail(),
+        id: profile.getId(),
+        token: idToken
       }
       gmailAccount.gRegister(gmailInfo)
     },
-    signOut() {
-      var auth2 = gapi.auth2.getAuthInstance();
+    signOut () {
+      var auth2 = window.gapi.auth2.getAuthInstance()
       auth2.signOut().then(function () {
-      console.log('User signed out.');
-      });
+        console.log('User signed out.')
+      })
       // var idToken = user.getAuthResponse().id_token
       // console.log('ID Token: ' + idToken)
       // this.$router.replace({name: 'Dashboard'})
     },
-    gRegister(data){
+    gRegister (data) {
       var d = this
       axios.post(`${window.apiLink}register`, {
         email: data.email,
@@ -163,19 +165,19 @@ export default {
           // console.log(response.data.message)
           d.errorMessage = response.data.message
         } else {
-          if(response.data.result === 'user exist'){
+          if (response.data.result === 'user exist') {
             var accountAutorized = {
-              id:data.id,
-              type:'google',
-              token:data.token
+              id: data.id,
+              type: 'google',
+              token: data.token
             }
             d.socMedAuthorize(accountAutorized)
-          }else{
-          localStorage.setItem('session', JSON.stringify(response.data))
-          d.$emit('setRoleName', response.data)
-          d.$router.replace({name: 'Dashboard'})
+          } else {
+            localStorage.setItem('session', JSON.stringify(response.data))
+            d.$emit('setRoleName', response.data)
+            d.$router.replace({name: 'Dashboard'})
           }
-          // alert(response.data.status)          
+          // alert(response.data.status)
           // localStorage.setItem('session', JSON.stringify(response.data))
           // d.$emit('setRoleName', response.data)
           // d.$router.replace({ name: 'Das' })
@@ -187,14 +189,14 @@ export default {
           body: error,
           type: 'error',
           id: uuid.v4()
-        })    
+        })
       })
     },
-    socMedAuthorize(data){
+    socMedAuthorize (data) {
       var d = this
       axios.get(`${window.apiLink}socmedauthorize`, {
-        params:{
-          user_id : data.id,
+        params: {
+          user_id: data.id,
           login_type: data.type,
           access_token: data.token
         }
@@ -237,7 +239,7 @@ export default {
         fb_id: data.id,
         api_key: data.token
       }).then(function (response) {
-        console.log(response+'1')
+        console.log(response + '1')
         if (response.data.status === 'error') {
           d.$emit('receiveAlertMessage', {
             body: response.data.message,
@@ -245,22 +247,22 @@ export default {
             id: uuid.v4()
           })
         } else if (response.data.status === 'validation_error') {
-          console.log(response+'2')
+          console.log(response + '2')
           d.error = true
           // console.log(response.data.message)
           d.errorMessage = response.data.message
         } else {
-          if(response.data.result === 'user exist'){
+          if (response.data.result === 'user exist') {
             var accountAutorized = {
-              id:data.id,
-              type:'facebook',
-              token:data.token
+              id: data.id,
+              type: 'facebook',
+              token: data.token
             }
             d.socMedAuthorize(accountAutorized)
-          }else{
-          localStorage.setItem('session', JSON.stringify(response.data))
-          d.$emit('setRoleName', response.data)
-          d.$router.replace({name: 'Dashboard'})
+          } else {
+            localStorage.setItem('session', JSON.stringify(response.data))
+            d.$emit('setRoleName', response.data)
+            d.$router.replace({name: 'Dashboard'})
           }
           // localStorage.setItem('session', JSON.stringify(response.data))
           // d.$emit('setRoleName', response.data)
@@ -291,7 +293,7 @@ export default {
           }
           account.register(info)
         })
-      } else if (response.status === 'not_authorized'){
+      } else if (response.status === 'not_authorized') {
         // the user is logged in to Facebook,
         // but has not authenticated your app
       } else {
