@@ -19,6 +19,7 @@ $(document).ready(function(){
       console.log('clicked');
     });
     $('#btnSignout').on('click',function(){
+      console.log('clicked');
       signOutme();
     });
     // signOutme();

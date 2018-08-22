@@ -203,7 +203,7 @@
         </a>
       </v-btn>
     </v-speed-dial>
-    <div id="btnSignout">12321</div>
+    <div id="btnSignout"></div>
   </v-app>
 </template>
 
