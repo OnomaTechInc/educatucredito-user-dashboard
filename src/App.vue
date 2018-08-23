@@ -18,19 +18,19 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="/home">{{ link.home }}</a>
+                <a class="nav-link js-scroll-trigger" href="https://www.educatucredito.com/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="/about-us">{{ link.aboutus }}</a>
+                <a class="nav-link js-scroll-trigger" href="https://www.educatucredito.com/about-us">About Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="https://blog.educatucredito.com">Blogs</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="/why-choose-us">{{ link.whyus }}</a>
+                <a class="nav-link js-scroll-trigger" href="https://www.educatucredito.com/why-choose-us">Why Choose Us</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="/user/#/login">{{ link.login }}</a>
+                  <a class="nav-link js-scroll-trigger" href="https://account.educatucredito.com/login">Login / Sign Up</a>
               </li>
             </ul>
           </div>

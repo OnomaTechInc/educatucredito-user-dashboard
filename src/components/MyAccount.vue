@@ -185,8 +185,8 @@ a {
   export default {
     data () {
       return {
-        menu:'',
-        date:false,
+        menu: '',
+        date: false,
         session: [],
         dialog: false,
         loading: false,
@@ -328,7 +328,7 @@ a {
           })
         } else {
           axios.post(`${window.apiLink}accounts/`, {
-            name:d.editedItem.cname,
+            name: d.editedItem.cname,
             user_id: d.session.id,
             due_date: d.editedItem.duedate,
             reported: d.editedItem.reported,
