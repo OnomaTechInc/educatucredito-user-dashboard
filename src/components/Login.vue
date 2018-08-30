@@ -36,16 +36,16 @@
                 <v-divider></v-divider>
                 <v-card>
                   <v-card-text>
-                    <v-btn block color="primary" @click="openFbLoginDialog">Sign in with Facebook</v-btn>
+                    <v-btn block color="primary" @click="openFbLoginDialog"><i class="icon-facebook mr25"></i> Sign in with Facebook</v-btn>
                     <center>OR</center>
-                    <v-btn @click="gmailLogin" block color="red" dark>Sign in with Google</v-btn>
+                    <v-btn @click="gmailLogin" block color="red" dark><i class="icon-google-plus mr25"></i> Sign in with Google</v-btn>
                     <div id="google-signin-btn" hidden></div>
                   </v-card-text>
                 </v-card>
             </v-form>
             <div class="below_box" align="center">
               <a href="/register">New user? Create your Account</a>
-              <a href="/forgotpassword" align="right">Forget Password?</a>
+              <a href="/forgotpassword" align="right">Forgot Password?</a>
             </div>
         </v-card>
         </v-flex>
@@ -81,6 +81,9 @@ a {
 .below_box {
   position: relative;
   top: 20px;
+}
+.mr25{
+  margin-right: 25px;
 }
 </style>
 <script>
