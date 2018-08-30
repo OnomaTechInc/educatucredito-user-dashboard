@@ -34,7 +34,7 @@
                       <v-layout wrap>
                         <v-flex xs12 sm12 md12>
                           <v-text-field 
-                            v-model="editedItem.cname" 
+                            v-model="editedItem.name" 
                             label="Name"
                           ></v-text-field>
                           </v-flex>
@@ -88,7 +88,14 @@
                             label="Balance"
                             style="display: none;"
                           ></v-text-field>
-                          <v-btn block @click="uploadPhoto">Attach Scan Copy</v-btn>
+                          <center><img
+                            width="200"
+                            v-show="editedItem.file"
+                            :src="editedItem.file"
+                            alt=""
+                          ></center>
+                          <v-btn v-if="editedItem.file" dark color="red" block @click="removePhoto()">Remove Attached File</v-btn>
+                          <v-btn v-else block @click="uploadPhoto">Attach Scan Copy</v-btn>
                           <upload-btn :fileChangedCallback="loadPhoto" style="display:none"></upload-btn>
                         </v-flex>
                       </v-layout>
@@ -211,10 +218,10 @@ a {
           var reader = new FileReader()
           var d = this
           reader.onload = function (event) {
-            d.$parent.$parent.editedItem.file = event.target.result
+            d.$parent.$parent.$parent.$parent.editedItem.file = event.target.result
           }
           reader.readAsDataURL(val)
-          d.$parent.$parent.photoIsLoaded = true
+          d.$parent.$parent.$parent.$parent.photoIsLoaded = true
         }
       }
     },
@@ -222,7 +229,11 @@ a {
       var d = this
       this.session = JSON.parse(window.localStorage.getItem('session'))
       axios.defaults.headers.common['Authorization'] = `bearer ${this.session.api_key}`
-      axios.get(window.apiLink + 'accounts').then(function (response) {
+      axios.get(window.apiLink + 'accounts', {
+        params: {
+          user_id: d.session.id
+        }
+      }).then(function (response) {
         // localStorage.setItem('session', JSON.stringify(response.data))
         // d.$emit('setRoleName', response.data)
         var items = []
@@ -263,6 +274,10 @@ a {
     watch: {
     },
     methods: {
+      removePhoto (item) {
+        this.editedItem.file = ''
+      },
+
       uploadPhoto () {
         document.getElementById('uploadFile').click()
       },
@@ -299,7 +314,7 @@ a {
         if (this.editedIndex > -1) {
           console.log('edit')
           axios.post(`${window.apiLink}accounts/${d.editedItem.id}`, {
-            name: d.editedItem.cname,
+            name: d.editedItem.name,
             due_date: d.editedItem.duedate,
             reported: d.editedItem.reported,
             amount: d.editedItem.amount,
@@ -313,22 +328,22 @@ a {
               id: uuid.v4()
             })
             d.close()
-            if (d.photoIsLoaded === true) {
-              axios.post(
-                `${window.apiLink}accounts/upload/${d.editedItem.id}`,
-                data
-              ).then(function (res2) {
-              }).catch(function (error2) {
-                console.log('error: ', error2)
-              })
-              d.photoIsLoaded = false
-            }
+            // if (d.photoIsLoaded === true) {
+            //   axios.post(
+            //     `${window.apiLink}accounts/upload/${d.editedItem.id}`,
+            //     data
+            //   ).then(function (res2) {
+            //   }).catch(function (error2) {
+            //     console.log('error: ', error2)
+            //   })
+            //   d.photoIsLoaded = false
+            // }
           }).catch(function (error) {
             console.log('error: ', error)
           })
         } else {
           axios.post(`${window.apiLink}accounts/`, {
-            name: d.editedItem.cname,
+            name: d.editedItem.name,
             user_id: d.session.id,
             due_date: d.editedItem.duedate,
             reported: d.editedItem.reported,
@@ -346,16 +361,16 @@ a {
               id: uuid.v4()
             })
             d.close()
-            if (d.photoIsLoaded === true) {
-              axios.post(
-                `${window.apiLink}accounts/upload/${res.data.last_insert_id}`,
-                data
-              ).then(function (res2) {
-              }).catch(function (error2) {
-                console.log('error: ', error2)
-              })
-              d.photoIsLoaded = false
-            }
+            // if (d.photoIsLoaded === true) {
+            //   axios.post(
+            //     `${window.apiLink}accounts/upload/${res.data.last_insert_id}`,
+            //     data
+            //   ).then(function (res2) {
+            //   }).catch(function (error2) {
+            //     console.log('error: ', error2)
+            //   })
+            //   d.photoIsLoaded = false
+            // }
           }).catch(function (error) {
             console.log('error: ', error)
           })

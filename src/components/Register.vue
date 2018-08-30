@@ -34,6 +34,19 @@
                     >
                     </v-text-field>
                     <v-text-field 
+                      prepend-icon="phone_android" 
+                      name="phone" 
+                      label="Phone Number" 
+                      id="phone"
+                      type="text"
+                      :error="error"
+                      :error-messages="errorMessage"
+                      v-model="phone"
+                      autocorrect="off"
+                      autocapitalize="none"
+                    >
+                    </v-text-field>
+                    <v-text-field 
                       prepend-icon="lock" 
                       name="password" 
                       label="Password" 
@@ -96,6 +109,7 @@ export default {
     return {
       e1: false,
       username: '',
+      phone: '',
       name: '',
       pass: '',
       role: '',
@@ -111,6 +125,7 @@ export default {
         email: this.username,
         password: this.pass,
         name: this.name,
+        phone: this.phone,
         role: this.role
       }).then(function (response) {
         if (response.data.status === 'error') {

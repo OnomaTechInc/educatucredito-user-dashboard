@@ -49,6 +49,13 @@
                   </v-flex>
                   <v-flex xs12 sm12 md12>
                     <v-text-field 
+                      v-model="editedItem.phone" 
+                      label="Phone"
+                      prepend-icon="phone_android" 
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field 
                       v-model="editedItem.company" 
                       label="Company"
                       prepend-icon="business" 
@@ -191,6 +198,10 @@ a {
       this.initialize()
     },
     methods: {
+      close () {
+        this.dialog = false
+      },
+
       changePasswd () {
         // var d = this
         this.dialog2 = true
@@ -213,6 +224,7 @@ a {
             id: response.data.result[0].id,
             name: response.data.result[0].name,
             avatar: response.data.result[0].user_image,
+            phone: response.data.result[0].phone,
             email: response.data.result[0].email,
             role: response.data.result[0].role,
             position: response.data.result[0].position,
@@ -254,6 +266,7 @@ a {
         axios.post(`${window.apiLink}users/${d.editedItem.id}`, {
           email: d.editedItem.email,
           name: d.editedItem.name,
+          phone: d.editedItem.phone,
           role: d.editedItem.role,
           company: d.editedItem.company,
           position: d.editedItem.position
@@ -266,7 +279,7 @@ a {
             type: 'success',
             id: uuid.v4()
           })
-          d.close()
+          // d.close()
           if (d.photoIsLoaded === true) {
             axios.post(
               `${window.apiLink}users/upload/${res.data.last_insert_id}`,
